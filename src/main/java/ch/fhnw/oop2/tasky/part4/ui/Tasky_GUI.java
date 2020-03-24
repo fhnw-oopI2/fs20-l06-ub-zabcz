@@ -24,7 +24,6 @@ public class Tasky_GUI extends Application {
         primaryStage.setHeight(height);
         primaryStage.centerOnScreen();
         primaryStage.show();
-
     }
 
     @Override public void stop() {}

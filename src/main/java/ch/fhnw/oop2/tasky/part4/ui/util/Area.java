@@ -11,7 +11,8 @@ public final class Area {
 
 	public static Region createRegion(String color) {
 		final Region region = new Region();
-		region.setPadding(new Insets(200,50,200,50));
+		region.setPadding(new Insets(300,20,0,0));
+		region.setMinWidth(90);
 		region.setStyle("-fx-background-color: #" +color + ";");
 		return region;
 	}

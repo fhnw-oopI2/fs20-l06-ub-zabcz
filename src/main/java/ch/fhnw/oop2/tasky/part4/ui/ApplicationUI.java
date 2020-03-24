@@ -51,7 +51,11 @@ public class ApplicationUI extends BorderPane {
     // layout elements
     // left
     private VBox vBoxLeft;
+    private HBox hBoxTodo;
+    private HBox hBoxDoing;
+    private HBox hBoxDone;
     private HBox hBoxLeftButtons;
+    private GridPane gridLeft;
 
     // right
     private VBox vBoxRight;
@@ -69,7 +73,7 @@ public class ApplicationUI extends BorderPane {
     private void initializeControls() {
         // init all controls
         labelTop = new Label("Tasky GUI v1.0");
-        labelFooter = new Label("footer");
+        labelFooter = new Label("© Marc Bugmann @ FHNW OOP2 2020");
 
         // left
         labelTodo = new Label("Todo");
@@ -127,18 +131,30 @@ public class ApplicationUI extends BorderPane {
         this.setLeft(vBoxLeft);
 
         // inside vbox: grid
-        GridPane gridLeft = new GridPane();
+        gridLeft = new GridPane();
+        hBoxTodo = new HBox();
+        hBoxDoing = new HBox();
+        hBoxDone = new HBox();
+
+        Stream.of(hBoxTodo, hBoxDoing, hBoxDone).forEach(hBox -> hBox.setSpacing(100));
+        Stream.of(hBoxTodo, hBoxDoing, hBoxDone).forEach(hBox -> hBox.setPrefWidth(100));
+
+        hBoxTodo.getChildren().add(Area.createRegion("396B7F"));
+        hBoxDoing.getChildren().add(Area.createRegion("72DFF1"));
+        hBoxDone.getChildren().add(Area.createRegion("2B8A9A"));
+
+        gridLeft.setPadding(new Insets(0, 20, 20, 0));
         gridLeft.add(labelTodo, 0, 0, 1, 1);
         gridLeft.add(labelDoing, 1, 0, 1, 1);
         gridLeft.add(labelDone, 2, 0, 1, 1);
 
-        gridLeft.add(Area.createRegion("396B7F"), 0, 1, 1, 1);
-        gridLeft.add(Area.createRegion("72DFF1"), 1, 1, 1, 1);
-        gridLeft.add(Area.createRegion("2B8A9A"), 2, 1, 1, 1);
+        gridLeft.add(hBoxTodo, 0, 1, 1, 1);
+        gridLeft.add(hBoxDoing, 1, 1, 1, 1);
+        gridLeft.add(hBoxDone, 2, 1, 1, 1);
 
         hBoxLeftButtons = new HBox();
 
-        hBoxLeftButtons.setSpacing(25);
+        hBoxLeftButtons.setSpacing(8);
         hBoxLeftButtons.setPrefWidth(50);
         hBoxLeftButtons.setMaxHeight(Double.MAX_VALUE);
         hBoxLeftButtons.getChildren().addAll(buttonNew, buttonRefresh);
