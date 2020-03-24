@@ -8,14 +8,14 @@ import javafx.stage.Stage;
 public class Tasky_GUI extends Application {
 
     public static final double width =  900;
-    public static final double height = 500;
+    public static final double height = 600;
 
 
     @Override public void init() {}
 
 
     @Override public void start(Stage primaryStage) {
-        Parent rootPanel = new ApplicationUI(primaryStage);
+        Parent rootPanel = new ApplicationUI();
 
         Scene scene = new Scene(rootPanel);
         primaryStage.setScene(scene);
