@@ -81,6 +81,9 @@ public class ApplicationUI extends BorderPane {
         // init all controls
         labelTop = new Label("Tasky GUI v1.0");
         labelFooter = new Label("© Marc Bugmann @ FHNW OOP2 2020");
+        labelFooter.setStyle("-fx-border-width: 0.5 0 0 0; -fx-border-color: black;");
+        labelFooter.setMaxWidth(Double.MAX_VALUE);
+        labelFooter.setPadding(new Insets(0,0,0,0));
 
         // left
         labelTodo = new Label("Todo");
@@ -190,6 +193,7 @@ public class ApplicationUI extends BorderPane {
 
     private void setBoxFormat(HBox hBox) {
         hBox.setSpacing(20);
+        hBox.setPadding(new Insets(10, 0, 20, 20));
         hBox.setPrefWidth(130);
         hBox.setPrefHeight(300);
         hBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
@@ -199,14 +203,15 @@ public class ApplicationUI extends BorderPane {
      * Layout of left side
      * */
     private void layoutRight() {
-        // rechter bereich
+        // init all layout objects
         vBoxRight = new VBox();
+        gridRight = new GridPane();
         this.setCenter(vBoxRight);
 
-        // RIGHT SIDE
-        gridRight = new GridPane();
+        // format grid
         gridRight.setHgap(7);
         gridRight.setVgap(20);
+        // setup grid
         vBoxRight.getChildren().add(gridRight);
         gridRight.add(labelID, 0, 0, 1, 1);
         gridRight.add(txtID, 1, 0, 1, 1);
@@ -227,6 +232,7 @@ public class ApplicationUI extends BorderPane {
         region.setPadding(new Insets(20));
         region.setMinWidth(80);
         region.setMinHeight(80);
+        region.setCenterShape(true);
         region.setStyle("-fx-background-color: #" +color + ";");
         return region;
     }

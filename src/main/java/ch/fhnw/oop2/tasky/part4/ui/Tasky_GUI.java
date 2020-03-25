@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 public class Tasky_GUI extends Application {
 
-    public static final double width =  1100;
+    public static final double width =  1000;
     public static final double height = 650;
 
 
@@ -16,7 +16,6 @@ public class Tasky_GUI extends Application {
 
     @Override public void start(Stage primaryStage) {
         Parent rootPanel = new ApplicationUI();
-
         Scene scene = new Scene(rootPanel);
         primaryStage.setScene(scene);
         primaryStage.setTitle("OOP2: Tasky GUI ");
