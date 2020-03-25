@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 
 public class Tasky_GUI extends Application {
 
-    public static final double width =  900;
-    public static final double height = 600;
+    public static final double width =  1100;
+    public static final double height = 650;
 
 
     @Override public void init() {}

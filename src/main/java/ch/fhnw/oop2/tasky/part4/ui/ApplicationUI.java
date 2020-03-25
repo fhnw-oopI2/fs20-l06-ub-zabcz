@@ -3,7 +3,12 @@ package ch.fhnw.oop2.tasky.part4.ui;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -56,11 +61,13 @@ public class ApplicationUI extends BorderPane {
     private HBox hBoxDone;
     private HBox hBoxLeftButtons;
     private GridPane gridLeft;
+    private GridPane gridTodo;
+    private GridPane gridDoing;
+    private GridPane gridDone;
 
     // right
     private VBox vBoxRight;
     private GridPane gridRight;
-
 
     // bring in stage
     public ApplicationUI() {
@@ -124,43 +131,68 @@ public class ApplicationUI extends BorderPane {
      * Layout of right side
      * */
     private void layoutLeft() {
-        // LEFT SIDE
-        vBoxLeft = new VBox();
+        // init all layout objects
+        vBoxLeft = new VBox(); // whole box on the left
+        gridLeft = new GridPane(); // grid with 3 columns: todo, doing, done
+        hBoxLeftButtons = new HBox(); // hbox for the buttons
+        hBoxTodo = new HBox(); // box for all tasks
+        hBoxDoing = new HBox(); // box for all tasks
+        hBoxDone = new HBox(); // box for all tasks
+        gridTodo = new GridPane(); // grid for multiple task in state todo
+        gridDoing = new GridPane(); // grid for multiple task in state doing
+        gridDone = new GridPane(); // grid for multiple task in state done
+
+        // format left side box and set box as left side oh main container
         vBoxLeft.setSpacing(10);
         vBoxLeft.setPadding(new Insets(10));
         this.setLeft(vBoxLeft);
 
-        // inside vbox: grid
-        gridLeft = new GridPane();
-        hBoxTodo = new HBox();
-        hBoxDoing = new HBox();
-        hBoxDone = new HBox();
-
-        Stream.of(hBoxTodo, hBoxDoing, hBoxDone).forEach(hBox -> hBox.setSpacing(100));
-        Stream.of(hBoxTodo, hBoxDoing, hBoxDone).forEach(hBox -> hBox.setPrefWidth(100));
-
-        hBoxTodo.getChildren().add(Area.createRegion("396B7F"));
-        hBoxDoing.getChildren().add(Area.createRegion("72DFF1"));
-        hBoxDone.getChildren().add(Area.createRegion("2B8A9A"));
-
+        // format grid with 3 columns: todo, doing, done
         gridLeft.setPadding(new Insets(0, 20, 20, 0));
+        gridLeft.setHgap(20);
+        // headers
         gridLeft.add(labelTodo, 0, 0, 1, 1);
         gridLeft.add(labelDoing, 1, 0, 1, 1);
         gridLeft.add(labelDone, 2, 0, 1, 1);
-
+        // boxes
         gridLeft.add(hBoxTodo, 0, 1, 1, 1);
         gridLeft.add(hBoxDoing, 1, 1, 1, 1);
         gridLeft.add(hBoxDone, 2, 1, 1, 1);
-
-        hBoxLeftButtons = new HBox();
-
+        // buttons
         hBoxLeftButtons.setSpacing(8);
-        hBoxLeftButtons.setPrefWidth(50);
+        //hBoxLeftButtons.setPrefWidth(50);
         hBoxLeftButtons.setMaxHeight(Double.MAX_VALUE);
         hBoxLeftButtons.getChildren().addAll(buttonNew, buttonRefresh);
 
-        // finally, set add  gridpane and hboxLeft to left
+        // format the three columns
+        Stream.of(hBoxTodo, hBoxDoing, hBoxDone).forEach(this::setBoxFormat);
+        // format grid for multiple tasks
+        Stream.of(gridTodo, gridDoing, gridDone).forEach(grid -> grid.setPadding(new Insets(10, 20, 50, 0)));
+        Stream.of(gridTodo, gridDoing, gridDone).forEach(grid -> grid.setVgap(20));
+        // add boxes grid to boxes
+        hBoxTodo.getChildren().addAll(gridTodo);
+        hBoxDoing.getChildren().addAll(gridDoing);
+        hBoxDone.getChildren().addAll(gridDone);
+
+        // create test-tasks inside the state boxes
+        gridTodo.add(createTaskRegion("72DFF1"), 0,0,1,1);
+        gridTodo.add(createTaskRegion("2B8A9A"), 0,1,1,1);
+
+        gridDoing.add(createTaskRegion("72DFF1"), 0,0,1,1);
+        gridDoing.add(createTaskRegion("2B8A9A"), 0,1,1,1);
+
+        gridDone.add(createTaskRegion("72DFF1"), 0,0,1,1);
+        gridDone.add(createTaskRegion("2B8A9A"), 0,1,1,1);
+
+        // insert grid and buttons to left side
         vBoxLeft.getChildren().addAll(gridLeft, hBoxLeftButtons);
+    }
+
+    private void setBoxFormat(HBox hBox) {
+        hBox.setSpacing(20);
+        hBox.setPrefWidth(130);
+        hBox.setPrefHeight(300);
+        hBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
     }
 
     /*
@@ -169,8 +201,6 @@ public class ApplicationUI extends BorderPane {
     private void layoutRight() {
         // rechter bereich
         vBoxRight = new VBox();
-        vBoxRight.setMinWidth(Tasky_GUI.width*2/5);
-        vBoxRight.setMinHeight(Tasky_GUI.height*2/3);
         this.setCenter(vBoxRight);
 
         // RIGHT SIDE
@@ -190,6 +220,15 @@ public class ApplicationUI extends BorderPane {
         gridRight.add(comboBox, 1, 4, 1, 1);
         gridRight.add(buttonSave, 0, 5, 1, 1);
         gridRight.add(buttonDelete, 1, 5, 1, 1);
+    }
+
+    public static Region createTaskRegion(String color) {
+        final Region region = new Region();
+        region.setPadding(new Insets(20));
+        region.setMinWidth(80);
+        region.setMinHeight(80);
+        region.setStyle("-fx-background-color: #" +color + ";");
+        return region;
     }
 
 }
